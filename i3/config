@@ -1,0 +1,197 @@
+### MISC ###
+
+# Font: default size is 8.
+font pango:Dejavu Sans 10
+
+### VARIABLES ###
+
+# Using Super since Alt could cause conflicts with software
+set $mod Mod4
+
+# Setting a variable to refresh i3status
+set $refresh_i3status killall -SIGUSR1 i3status
+
+# Variable for rofi since I use for two bindings
+set $rofi "rofi -modi drun,run -show drun -drun-match-fields name,keywords -sort -sorting-method fzf -show-icons -disable-history"
+
+### BINDINGS ###
+
+# Audio: use pactl to adjust volume in PulseAudio.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Screenshots
+bindsym Print exec --no-startup-id  xfce4-screenshooter --fullscreen --save ~/Immagini/Istantanee/"Istantanea_$(date -d "today" +"%Y-%m-%d_%H-%M-%S").png"
+
+# Kill focused window, same as closing gnome-terminal
+bindsym Ctrl+Shift+q kill
+
+# A more modern dmenu replacement is rofi
+bindsym $mod+Return exec --no-startup-id $rofi 
+
+# Change focus: arrows 
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Change focus: hjkl 
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window: arrows
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Move focused window: hjkl
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Switch to next workspace
+bindsym $mod+Next workspace next; exec --no-startup-id ~/.config/i3/sort_ws.sh
+bindsym $mod+n workspace next; exec --no-startup-id ~/.config/i3/sort_ws.sh
+
+# Switch to previous workspace
+bindsym $mod+Prior workspace prev; exec --no-startup-id ~/.config/i3/sort_ws.sh
+bindsym $mod+p workspace prev; exec --no-startup-id ~/.config/i3/sort_ws.sh
+
+# Create new workspace
+bindsym $mod+Insert exec --no-startup-id ~/.config/i3/empty_workspace.sh; exec --no-startup-id $rofi
+bindsym $mod+i exec --no-startup-id ~/.config/i3/empty_workspace.sh; exec --no-startup-id $rofi
+
+# Move container to next workspace, it will create the ws if not present
+bindsym $mod+Shift+Next exec --no-startup-id ~/.config/i3/move_next_workspace.sh
+bindsym $mod+Shift+n exec --no-startup-id ~/.config/i3/move_next_workspace.sh
+
+# Move container to previous workspace
+# bindsym $mod+Shift+Prior exec --no-startup-id ~/.config/i3/move_previous_workspace.sh;
+# bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/move_previous_workspace.sh; 
+bindsym $mod+Shift+Prior move container to workspace prev;
+bindsym $mod+Shift+p move container to workspace prev;
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# toggle
+bindsym $mod+semicolon layout toggle tabbed split
+
+# tabbed
+bindsym $mod+comma layout tabbed
+
+# horizontal
+bindsym $mod+slash split h
+
+# vertical
+bindsym $mod+period split v
+
+# fullscreen
+bindsym $mod+f fullscreen toggle
+
+### MODES ###
+
+# User mode defines useful commands 
+mode "user mode (mod+u)" {
+	# To find your sinks type in terminal 'pactl list sinks'
+	# Xonar DGX: headphones
+	bindsym h exec --no-startup-id pactl set-default-sink alsa_output.pci-0000_22_04.0.analog-stereo; mode "default" 
+
+	# BenQ EX2510: speakers
+	bindsym s exec --no-startup-id pactl set-default-sink alsa_output.pci-0000_26_00.1.hdmi-stereo; mode "default"
+
+	# start second monitor (depends on setup) 
+	bindsym 2 exec --no-startup-id xrandr --output HDMI-0 --auto --right-of DP-0; mode "default"
+
+	# shutdown second monitor (depends on setup) 
+	bindsym 1 exec --no-startup-id xrandr --output HDMI-0 --off; mode "default"
+	
+	# restart pipewire
+	bindsym r exec --no-startup-id systemctl --user restart pipewire.service pipewire-pulse.socket; mode "default"
+
+	# enable g-sync
+	bindsym g exec --no-startup-id nvidia-settings -a CurrentMetaMode="DP-0: 1920x1080_144 +0+0 {AllowGSYNCCompatible=On}"; mode "default"
+
+	# disable g-sync
+	bindsym o exec --no-startup-id nvidia-settings -a CurrentMetaMode="DP-0: 1920x1080_144 +0+0 {AllowGSYNCCompatible=Off}"; mode "default"
+
+	# back to normal: Only mod+u to exit
+	bindsym $mod+u mode "default"
+}
+bindsym $mod+u mode "user mode (mod+u)"
+
+# vanilla us mode
+mode "us mode (mod+o)" {
+	bindsym $mod+o mode "default"; exec --no-startup-id setxkbmap us -variant intl
+}
+bindsym $mod+o mode "us mode (mod+o)"; exec --no-startup-id setxkbmap us
+
+### BAR ###
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+	status_command i3status
+	font pango: Dejavu Sans Mono 10
+}
+
+### EXECS ###
+
+# Suspension: xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec_always --no-startup-id xss-lock -- i3lock -n -i ~/.config/i3/lock-fhd.png
+
+# Network: NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+# start picom to avoid tearing
+exec_always --no-startup-id picom --vsync --unredir-if-possible --backend glx --no-use-damage --xrender-sync-fence 
+
+# us international
+exec --no-startup-id setxkbmap us -variant intl
+
+### WINDOWS RULES ###
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Disable focusing windows with mouse
+focus_follows_mouse no
+
+# Remove borders with one application
+hide_edge_borders smart
+
+# Default layout is tabbed
+workspace_layout tabbed
+
+# Title bar icons
+for_window [all] title_window_icon padding 3px
+
+# Remove title bars when not necessary
+for_window [all] border pixel 2px 
+
+# Center floating windows
+for_window [floating] move position center
+
+# PiP in the right bottom corner with contraints
+for_window [class="firefox" title="Picture-in-Picture"] border pixel 2px
+for_window [class="firefox" title="Picture-in-Picture"] resize set width 484 px height 274 px, move position 1436 px 783 px, sticky enable
