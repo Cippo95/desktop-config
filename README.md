@@ -1,4 +1,12 @@
 # desktop-config
 
 My desktop config files for backup.
-I currently use mostly mate de applications.
+
+My current "worth mentioning" desktop applications:
+- Folders/Directories: Caja
+- Pictures: Eye of Mate
+- Videos: mpv
+- Terminal: mate-terminal
+- PDF: Atril
+- Appearance: lxappearance
+- Editor: Pluma
