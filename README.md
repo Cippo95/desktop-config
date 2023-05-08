@@ -3,10 +3,10 @@
 My desktop config files for backup.
 
 My current "worth mentioning" desktop applications:
-- Folders/Directories: Caja
-- Pictures: Eye of Mate
+- Folders/Directories: Thunar
+- Pictures: gThumb
 - Videos: mpv
-- Terminal: mate-terminal
-- PDF: Atril
+- Terminal: xfce4-terminal
+- PDF: Firefox
 - Appearance: lxappearance
-- Editor: Pluma
+- Editor: Mousepad
