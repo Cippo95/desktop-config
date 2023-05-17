@@ -1,5 +1,7 @@
 # desktop-config
 
+THIS NEEDS AN UPDATE
+
 My desktop config files for backup.
 
 My current "worth mentioning" desktop applications:
