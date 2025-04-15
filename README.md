@@ -1,17 +1,23 @@
 # desktop-config
 
-I'm getting close to reinstall Fedora from scratch after a lot of years.
-I think that maybe it could solve some issue, but I'm not sure it is more likely that what I'm experiencing is software bugs.
+I use Fedora 41, the i3wm spin.
 
-My desktop config files for backup.
+I usually don't like apps with a lot of dependencies.
 
 My current "worth mentioning" desktop applications:
-- File Explorer: Thunar
-- Pictures: qView
-- Videos: mpv
-- Terminal: xfce4-terminal
-- PDF: Firefox/Zathura
-- Editor: Vim/VSCodium (even if I don't like it so much)
-- Games: Steam, Heroic Launcher
+- Thunar: file explorer, I don't find that many file explorers are that good to be honest;
+- qView: lightweight viewer, also in this case I don't like many viewers;
+- mpv: lightweight video player, I really like it even if it isn't so good with 4K videos (it doesn't use hardware accel by default);
+- xfce4-terminal: I like this terminal more than others, it has tabs it is lightweigth, little dependencies;
+- Firefox: I like it even if it isn't perfect, I use it also as a pdf viewer;
+- Zathura: Alternative pdf viewer;
+- Steam: it is Steam;
+- Heroic Launcher: great for Epic Store, GOG and Amazon Prime games;
+- QtJackCtl
+- OBS
+- Pavucontrol
+- KeePassXC
+- Discord
+- 
 
 WIP
